@@ -23,7 +23,7 @@
 		this.Connection.Open()
 		for a,b in this.Connection.Errors
 			if (a.Number != 0) {
-			m(a.Number,a.Description,a.Source)
+			MsgBox, % a.Number . " " . a.Description . " " . a.Source
 			}
 		if(this.Connection.State!=1){
 			ErrorLevel := "-1"
@@ -46,14 +46,15 @@
 			return {Empty:"No Results"},this.Close()
 		for a in this.Connection.Errors{
 			Try, DebugWindow("the query wich resulted in error was => " . SQL,,1)
-			m("Function: " A_ThisFunc,"Line: " A_LineNumber,"","a.Description: " a.Description,"a.HelpContent: " a.HelpContent,"a.HelpFile: " a.HelpFile,"a.NativeError: " a.NativeError,"a.Number: " a.Number,"a.Source: " a.Source,"a.SQLState: " a.SQLState,"",SQL)
+			MsgBox, % "Function: " . A_ThisFunc . "Line: " . A_LineNumber . "" . "a.Description: " . a.Description . "a.HelpContent: " . a.HelpContent . "a.HelpFile: " . a.HelpFile . "a.NativeError: " . a.NativeError . "a.Number: " . a.Number . "a.Source: " . a.Source . "a.SQLState: " . a.SQLState . "" . SQL
 			return this.Close()
 		}
 		if(RS.BOF&&RS.EOF){
-			m("Function: " A_ThisFunc,"Line: " A_LineNumber,"this.Connection.Errors",this.Connection.Errors.Count(),"RS.Errors: " RS.Errors.HelpFile,"RS.BOF: " RS.BOF,"RS.EOF: " RS.EOF,"RS.Fields.Count: " RS.Fields.Count())
+			MsgBox, % "Function: " . A_ThisFunc . "Line: " . A_LineNumber . "this.Connection.Errors" . this.Connection.Errors.Count() . "RS.Errors: " . RS.Errors.HelpFile . "RS.BOF: " . RS.BOF . "RS.EOF: " . RS.EOF . "RS.Fields.Count: " . RS.Fields.Count()
 			for a,b in RS.Errors
-				m("Function: " A_ThisFunc,"Line: " A_LineNumber,"",a.Description)
-			return m("Function: " A_ThisFunc,"Line: " A_LineNumber,"","HERE!",SQL),this.Close()
+				MsgBox, % "Function: " . A_ThisFunc . "Line: " . A_LineNumber . " " . a.Description
+			MsgBox, % "Function: " . A_ThisFunc . "Line: " . A_LineNumber . " " . "HERE!" . SQL
+			return this.Close()
 		}
 		if(RS.BOF&&RS.EOF){
 			ErrorLevel := "-2"
